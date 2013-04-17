@@ -27,13 +27,13 @@ public class OAKTest extends OakMongoTestBase {
 
 		if (oakType.equals("mongomk")) {
 			// create mongomk oak instance
-	        Builder mkBuilder=new Builder();
-	        MongoConnection connection=new MongoConnection(conf.getHost(),
-	                conf.getMongoPort(), conf.getMongoDatabase());
-	        
-	        mkBuilder.setMongoDB(connection.getDB());
-	        mkBuilder.setClusterId(random.nextInt(1000));
-	        MicroKernel mk = new MongoMK.Builder().open();
+			Builder mkBuilder = new Builder();
+			MongoConnection connection = new MongoConnection(conf.getHost(),
+					conf.getMongoPort(), conf.getMongoDatabase());
+
+			mkBuilder.setMongoDB(connection.getDB());
+			mkBuilder.setClusterId(random.nextInt(1000));
+			MicroKernel mk = new MongoMK.Builder().open();
 			// create repository
 			repo = new Jcr(mk).createRepository();
 			nodesNumber = 6000;
@@ -53,7 +53,7 @@ public class OAKTest extends OakMongoTestBase {
 	// 10,000 nodes ; 100 nodes/commit
 	@Test
 	public void testFlatStructure() throws Exception {
-		
+
 		int nodesPerSave = 100;
 		int count = 0;
 		Node root = adminSession.getRootNode();
@@ -74,25 +74,48 @@ public class OAKTest extends OakMongoTestBase {
 	// 100,000 nodes 1,000 nodes/commit
 	@Test
 	public void testPyramidStructure() throws Exception {
-
 		int count = 0;
 		Node root = adminSession.getRootNode();
 		dbWriter.initialCommit("syncOAK");
 		dbWriter.syncMongos(mongosNumber, "syncOAK");
-		for (int k = 0; k < 5; k++) {
-			Node nk = root.addNode("testA" + nodeNamePrefix + k, "nt:folder");
-			for (int j = 0; j < 6; j++) {
-				Node nj = nk.addNode("testB" + nodeNamePrefix + j, "nt:folder");
-				for (int i = 0; i < 1000; i++) {
-					nj.addNode("testC" + nodeNamePrefix + i, "nt:folder");
+
+		if (oakType.equals("mongomk")) {
+			for (int k = 0; k < 5; k++) {
+				Node nk = root.addNode("testA" + nodeNamePrefix + k,
+						"nt:folder");
+				for (int j = 0; j < 10; j++) {
+					Node nj = nk.addNode("testB" + nodeNamePrefix + j,
+							"nt:folder");
+					for (int i = 0; i < 1000; i++) {
+						nj.addNode("testC" + nodeNamePrefix + i, "nt:folder");
+					}
+					monitor.start();
+					adminSession.save();
+					monitor.stop();
+					dbWriter.insertResult(Integer.toString(count++),
+							(float) monitor.getLastValue(), "results");
+					System.out.println("Cluster node #" + clusterNodeId
+							+ " commitId# " + count);
 				}
-				monitor.start();
-				adminSession.save();
-				monitor.stop();
-				dbWriter.insertResult(Integer.toString(count++),
-						(float) monitor.getLastValue(), "results");
-				System.out.println("Cluster node #" + clusterNodeId
-						+ " commitId# " + count);
+			}
+		} else {
+			for (int k = 0; k < 5; k++) {
+				Node nk = root.addNode("testA" + nodeNamePrefix + k,
+						"nt:folder");
+				for (int j = 0; j < 10; j++) {
+					Node nj = nk.addNode("testB" + nodeNamePrefix + j,
+							"nt:folder");
+					for (int i = 0; i < 100; i++) {
+						nj.addNode("testC" + nodeNamePrefix + i, "nt:folder");
+					}
+					monitor.start();
+					adminSession.save();
+					monitor.stop();
+					dbWriter.insertResult(Integer.toString(count++),
+							(float) monitor.getLastValue(), "results");
+					System.out.println("Cluster node #" + clusterNodeId
+							+ " commitId# " + count);
+				}
 			}
 		}
 	}

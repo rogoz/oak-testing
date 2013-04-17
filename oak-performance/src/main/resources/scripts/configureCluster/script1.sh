@@ -37,9 +37,13 @@ export M2=/home/${USER}/maven/bin
 export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"  
 export PATH=$PATH:$M2  
   
-# Clone the repository  
+# Clone the jackrabbit repository  
 echo Clone oak repository  
-git clone https://github.com/rogoz/jackrabbit-oak.git  
+git clone https://github.com/apache/jackrabbit-oak.git  
+
+# Clone the test repository  
+echo Clone test repository  
+git clone https://github.com/rogoz/oak-testing.git  
   
 # Build OAK  
 mvn -f /home/${USER}/jackrabbit-oak/pom.xml clean install -DskipTests
