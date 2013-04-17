@@ -146,15 +146,4 @@ public class MKTest extends MongoMkTestBase {
             }
         }
     }
-    
-    private MongoMK createMK(int clusterId) {
-
-    	MongoMK.Builder builder = new MongoMK.Builder();
-        DB db = MongoUtils.getConnection().getDB();
-        builder.setMongoDB(db);
-        builder.setAsyncDelay(10);
-        return builder.setClusterId(clusterId).open();
-        
-    }
-
 }

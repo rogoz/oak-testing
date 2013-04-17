@@ -30,6 +30,7 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then
   mongo --host $MONGOS_MAIN_PLATFORM admin --port $MONGOS_PORT  --eval "sh.addShard(\"$SHARD3_HOST:$MONGOD_PORT\")"  
   echo "Create collections"  
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"NODES\")"  
+  mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"nodes\")" 
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"blobs\")"  
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"segments\")"  
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"syncOAK\")"  
@@ -37,6 +38,7 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "sh.enableSharding(\"$DATABASE_NAME\")"  
   echo "Set sharding key"  
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.NODES\", { \"_id\": 1 }, true)"  
+  mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.nodes\", { \"_id\": 1 }, true)"  
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.segments\", { \"_id\": 1 }, true)"  
   mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.syncOAK\", { \"_id\": 1 }, true)"  
 fi
