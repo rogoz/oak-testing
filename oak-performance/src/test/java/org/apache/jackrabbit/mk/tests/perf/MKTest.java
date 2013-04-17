@@ -2,12 +2,18 @@ package org.apache.jackrabbit.mk.tests.perf;
 
 
 import java.util.Random;
+
+import org.apache.jackrabbit.mk.blobs.MemoryBlobStore;
 import org.apache.jackrabbit.mk.testing.MongoMkTestBase;
 import org.apache.jackrabbit.mongomk.util.MongoConnection;
+import org.apache.jackrabbit.mongomk.MemoryDocumentStore;
 import org.apache.jackrabbit.mongomk.MongoMK;
+import org.apache.jackrabbit.mongomk.MongoUtils;
 import org.apache.jackrabbit.mongomk.MongoMK.Builder;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.mongodb.DB;
 
 
 
@@ -20,13 +26,12 @@ public class MKTest extends MongoMkTestBase {
     @Before
     public void beforeTest() throws Exception {
         Random random = new Random();
-        Builder mkBuilder=new Builder();
+        MongoMK.Builder mkBuilder = new MongoMK.Builder();
         MongoConnection connection=new MongoConnection(conf.getHost(),
                 conf.getMongoPort(), conf.getMongoDatabase());
-        
         mkBuilder.setMongoDB(connection.getDB());
         mkBuilder.setClusterId(random.nextInt(1000));
-        mk = new MongoMK.Builder().open();
+        mk=mkBuilder.open();
     }
 
     @Test
@@ -141,4 +146,15 @@ public class MKTest extends MongoMkTestBase {
             }
         }
     }
+    
+    private MongoMK createMK(int clusterId) {
+
+    	MongoMK.Builder builder = new MongoMK.Builder();
+        DB db = MongoUtils.getConnection().getDB();
+        builder.setMongoDB(db);
+        builder.setAsyncDelay(10);
+        return builder.setClusterId(clusterId).open();
+        
+    }
+
 }

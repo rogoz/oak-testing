@@ -27,15 +27,13 @@ public class OAKTest extends OakMongoTestBase {
 
 		if (oakType.equals("mongomk")) {
 			// create mongomk oak instance
-			Builder mkBuilder = new Builder();
-			MongoConnection connection = new MongoConnection(conf.getHost(),
-					conf.getMongoPort(), conf.getMongoDatabase());
-
-			mkBuilder.setMongoDB(connection.getDB());
-			mkBuilder.setClusterId(random.nextInt(1000));
-			MicroKernel mk = new MongoMK.Builder().open();
+	        MongoMK.Builder mkBuilder = new MongoMK.Builder();
+	        MongoConnection connection=new MongoConnection(conf.getHost(),
+	                conf.getMongoPort(), conf.getMongoDatabase());
+	        mkBuilder.setMongoDB(connection.getDB());
+	        mkBuilder.setClusterId(random.nextInt(1000));
 			// create repository
-			repo = new Jcr(mk).createRepository();
+			repo = new Jcr(mkBuilder.open()).createRepository();
 			nodesNumber = 6000;
 		} else {
 			// create segmentmk oak instance
