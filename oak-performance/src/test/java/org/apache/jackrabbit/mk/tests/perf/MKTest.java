@@ -1,19 +1,12 @@
 package org.apache.jackrabbit.mk.tests.perf;
-
-
 import java.util.Random;
-
-import org.apache.jackrabbit.mk.blobs.MemoryBlobStore;
 import org.apache.jackrabbit.mk.testing.MongoMkTestBase;
 import org.apache.jackrabbit.mongomk.util.MongoConnection;
-import org.apache.jackrabbit.mongomk.MemoryDocumentStore;
 import org.apache.jackrabbit.mongomk.MongoMK;
-import org.apache.jackrabbit.mongomk.MongoUtils;
-import org.apache.jackrabbit.mongomk.MongoMK.Builder;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mongodb.DB;
+
 
 
 
