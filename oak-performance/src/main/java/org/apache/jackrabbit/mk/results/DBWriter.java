@@ -31,4 +31,9 @@ public class DBWriter {
                 append("v", value);
         database.getCollection(collectionName).insert(doc);
     }
+    
+    public void insertFinalResult(String value, String collectionName){
+        BasicDBObject doc = new BasicDBObject("clusterNodeId", clusterNodeId).append("value", value);
+        database.getCollection(collectionName).insert(doc);
+    }
 }
