@@ -110,10 +110,10 @@ public class MKTest extends MongoMkTestBase {
         String diff = "";
         dbWriter.initialCommit("syncOAK");
         dbWriter.syncMongos(mongosNumber, "syncOAK");
-        for (int k = 0; k < 10; k++) {
+        for (int k = 0; k < 5; k++) {
             diff = diff + "+ \"" + clusterNodeId + k + "\": { \"" + property
                     + "\": \"" + value + "\"}\n";
-            for (int j = 0; j < 20; j++) {
+            for (int j = 0; j < 10; j++) {
                 diff = diff + "+ \"" + clusterNodeId + k + "/" + clusterNodeId
                         + j + "\": { \"" + property + "\": \"" + value
                         + "\"}\n";
