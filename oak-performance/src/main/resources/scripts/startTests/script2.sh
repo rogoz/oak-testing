@@ -10,7 +10,8 @@ SUMMARY_CNAME=summary
 MONGOS_MAIN_PLATFORM=@option.MONGOS_MAIN_PLATFORM@
 MONGOS_PORT=30000
 RESULT_HTML=results.html
-SUMMARY=results.txt
+SUMMARY=resultsStats.json
+DBSUMMARY=resultsDBStats.json
 CURRENT_NODE=@node.hostname@
 
 TOTAL_SAVES=`mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --quiet --eval "var result=db.${COLLECTION_NAME}.count();printjson(result)"`
@@ -19,6 +20,9 @@ echo INSTANCE_SAVES=$INSTANCE_SAVES
 
 # Create the js script
 rm -f $RESULT_HTML
+rm -f $SUMMARY
+rm -f $DBSUMMARY
+rm -rf results*
 
 if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then
     # Add cols
@@ -70,9 +74,8 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then
     </html>" >> $RESULT_HTML
     
     # Generate the summary file
-    VALUE=`mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --quiet --eval "var result=db.${SUMMARY_CNAME}.find({},{"_id":0}).pretty();printjson(result)"`
+    VALUE=`mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --quiet --eval "var result=db.${SUMMARY_CNAME}.find({},{_id:0}).toArray();printjson(result)"`
     echo $VALUE > $SUMMARY
     VALUE=`mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --quiet --eval "var result=db.stats();printjson(result)"`
-    echo $VALUE >> $SUMMARY	
-    
+    echo $VALUE > $DBSUMMARY	
 fi
