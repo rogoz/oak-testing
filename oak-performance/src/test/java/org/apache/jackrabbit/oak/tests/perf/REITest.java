@@ -46,7 +46,7 @@ public class REITest extends OakMongoTestBase {
 		for (int i2 = 0; i2 < 50; i2++) {
 			Node ni2 = ni1
 					.addNode("section" + nodeNamePrefix + i2, "nt:folder");
-			for (int i3 = 0; i3 < 20; i3++) {
+			for (int i3 = 0; i3 < 25; i3++) {
 				Node ni3 = ni2.addNode("group" + nodeNamePrefix + i3,
 						"nt:folder");
 				for (int i4 = 0; i4 < 50; i4++) {
