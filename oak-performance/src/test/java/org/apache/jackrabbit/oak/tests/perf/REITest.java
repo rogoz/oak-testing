@@ -43,7 +43,50 @@ public class REITest extends OakMongoTestBase {
 		dbWriter.syncMongos(mongosNumber, "syncOAK");
 
 		Node ni1 = root.addNode("departament" + nodeNamePrefix, "nt:unstructured");
-		for (int i2 = 0; i2 < 50; i2++) {
+		for (int i2 = 0; i2 < 100; i2++) {
+			Node ni2 = ni1
+					.addNode("section" + nodeNamePrefix + i2, "nt:folder");
+			for (int i3 = 0; i3 < 25; i3++) {
+				Node ni3 = ni2.addNode("group" + nodeNamePrefix + i3,
+						"nt:folder");
+				for (int i4 = 0; i4 < 50; i4++) {
+					Node ni4 = ni3.addNode("product" + nodeNamePrefix + i4,
+							"nt:folder");
+					for (int i5 = 0; i5 < 4; i5++) {
+						ni4.addNode("size" + nodeNamePrefix + i5,
+								"nt:folder");
+					}
+				}
+			}
+			monitor.start();
+			adminSession.save();
+			monitor.stop();
+			dbWriter.insertResult(Integer.toString(count++),
+					(float) monitor.getLastValue(), "results");
+		}
+		String summary = String.format(
+				"Max=%s Min=%s Avg=%s Hits=%s FirstAccess=%s LastAccess=%s",
+				monitor.getMax(), monitor.getMin(), monitor.getAvg(),
+				monitor.getHits(), monitor.getFirstAccess(),
+				monitor.getLastAccess());
+		dbWriter.insertFinalResult(summary, "summary");
+	}
+	
+	/**
+	 * The total number of products of variants must be multiplied with the oak
+	 * instances number.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test1MProductsx3MVariants() throws Exception {
+		int count = 0;
+		Node root = adminSession.getRootNode();
+		dbWriter.initialCommit("syncOAK");
+		dbWriter.syncMongos(mongosNumber, "syncOAK");
+
+		Node ni1 = root.addNode("departament" + nodeNamePrefix, "nt:unstructured");
+		for (int i2 = 0; i2 < 1000; i2++) {
 			Node ni2 = ni1
 					.addNode("section" + nodeNamePrefix + i2, "nt:folder");
 			for (int i3 = 0; i3 < 25; i3++) {
