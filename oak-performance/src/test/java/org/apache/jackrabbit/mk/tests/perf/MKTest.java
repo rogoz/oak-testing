@@ -161,4 +161,51 @@ public class MKTest extends MongoMkTestBase {
 				monitor.getLastAccess());
 		dbWriter.insertFinalResult(summary, "summary");
 	}
+	
+	/**
+	 * 10,000,000 nodes/ 10,000 per commit
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void testHugePyramidStructure() throws InterruptedException {
+
+		int count = 0;
+		String diff = "";
+		dbWriter.initialCommit("syncOAK");
+		dbWriter.syncMongos(mongosNumber, "syncOAK");
+		for (int k = 0; k < 10; k++) {
+			diff = diff + "+ \"" + clusterNodeId + k + "\": { \"" + property
+					+ "\": \"" + value + "\"}\n";
+			for (int j = 0; j < 100; j++) {
+				diff = diff + "+ \"" + clusterNodeId + k + "/" + clusterNodeId
+						+ j + "\": { \"" + property + "\": \"" + value
+						+ "\"}\n";
+				for (int i = 0; i < 10; i++) {
+					diff = diff + "+ \"" + clusterNodeId + k + "/"
+							+ clusterNodeId + j + "/" + clusterNodeId + i
+							+ "\": { \"" + property + "\": \"" + value
+							+ "\"}\n";
+					for (int l = 0; l < 1000; l++) {
+						diff = diff + "+ \"" + clusterNodeId + k + "/"
+								+ clusterNodeId + j + "/" + clusterNodeId + i
+								+ "/" + clusterNodeId + l + "\": { \""
+								+ property + "\": \"" + value + "\"}\n";
+					}
+
+				}
+				monitor.start();
+				mk.commit("/", diff.trim(), null, message);
+				monitor.stop();
+				diff = "";
+				dbWriter.insertResult(Integer.toString(count++),
+						(float) monitor.getLastValue(), "results");
+			}
+		}
+		String summary = String.format(
+				"Max=%s Min=%s Avg=%s Hits=%s FirstAccess=%s LastAccess=%s",
+				monitor.getMax(), monitor.getMin(), monitor.getAvg(),
+				monitor.getHits(), monitor.getFirstAccess(),
+				monitor.getLastAccess());
+		dbWriter.insertFinalResult(summary, "summary");
+	}
 }
