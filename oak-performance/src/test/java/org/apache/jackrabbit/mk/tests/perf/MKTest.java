@@ -6,6 +6,9 @@ import org.apache.jackrabbit.mongomk.util.MongoConnection;
 import org.apache.jackrabbit.mongomk.MongoMK;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.impl.SimpleLogger;
 
 public class MKTest extends MongoMkTestBase {
 
@@ -22,6 +25,9 @@ public class MKTest extends MongoMkTestBase {
 		mkBuilder.setMongoDB(connection.getDB());
 		mkBuilder.setClusterId(random.nextInt(1000));
 		mk = mkBuilder.open();
+		//SimpleLogger LOG=(SimpleLogger) LoggerFactory.getLogger(MongoMK.class);
+		
+		
 	}
 
 	@Test
