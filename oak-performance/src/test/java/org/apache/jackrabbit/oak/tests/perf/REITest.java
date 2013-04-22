@@ -86,7 +86,7 @@ public class REITest extends OakMongoTestBase {
 		dbWriter.syncMongos(mongosNumber, "syncOAK");
 
 		Node ni1 = root.addNode("departament" + nodeNamePrefix, "nt:unstructured");
-		for (int i2 = 0; i2 < 1000; i2++) {
+		for (int i2 = 0; i2 < 650; i2++) {
 			Node ni2 = ni1
 					.addNode("section" + nodeNamePrefix + i2, "nt:folder");
 			for (int i3 = 0; i3 < 25; i3++) {
