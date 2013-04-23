@@ -32,14 +32,16 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then
     mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.segments.remove()"     
     mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.results.remove()"  
     mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.summary.remove()"     
-mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.journals.remove()"      
+    mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db.journals.remove()"      
     # start the test on the main mongos platform (workaround for the concurrent oak repositories init)   
-    nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dtest=@option.TestName@ -Dmongos.number=@option.MongosNumber@ -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=@option.OakType@ 0<&- &>/dev/null &  
+    nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dorg.slf4j.simpleLogger.logFile=${CLUSTER_NODE_ID}mk.log -Dtest=@option.TestName@ -Dmongos.number=@option.MongosNumber@ -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=@option.OakType@ &
+    # 0<&- &>/dev/null  -Dorg.slf4j.simpleLogger.logFile=${CLUSTER_NODE_ID}mk.log
     PID=`echo $!`  
     echo Starting the tests on process=$PID  
     for (( ; ; ))  
     do  
-        sleep $PROCESS_TIMEOUT  
+        sleep $PROCESS_TIMEOUT
+        logrotate -f -s logRotateStatus.out /home/jslave/oak-testing/oak-performance/target/classes/logManagement/logRotationOak.conf  
         if ps -p $PID > /dev/null  
         then  
            echo "$PID is running"  
@@ -49,8 +51,10 @@ mongo --host $MONGOS_MAIN_PLATFORM $DATABASE_NAME --port $MONGOS_PORT --eval "db
     done    
 else   
       # wait for the repository to be initialized from the main mongos platform   
-      sleep 60       
-    nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dtest=@option.TestName@ -Dmongos.number=@option.MongosNumber@ -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=@option.OakType@ 0<&- &>/dev/null &  
+      sleep 60
+      logrotate -f -s logRotateStatus.out /home/jslave/oak-testing/oak-performance/target/classes/logManagement/logRotationOak.conf       
+      nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dorg.slf4j.simpleLogger.logFile=${CLUSTER_NODE_ID}mk.log -Dtest=@option.TestName@ -Dmongos.number=@option.MongosNumber@ -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=@option.OakType@ &
+    # 0<&- &>/dev/null  -Dorg.slf4j.simpleLogger.logFile=${CLUSTER_NODE_ID}mk.log 
     PID=`echo $!`  
     echo Starting the tests on process=$PID  
     for (( ; ; ))  
