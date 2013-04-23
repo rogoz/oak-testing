@@ -46,9 +46,15 @@
 			<artifactId>oak-mongomk</artifactId>
 			<version>0.7-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.11</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
+			<artifactId>jul-to-slf4j</artifactId>
 			<version>1.7.4</version>
 		</dependency>
 	</dependencies>
