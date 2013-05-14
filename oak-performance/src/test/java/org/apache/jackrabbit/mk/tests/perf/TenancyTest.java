@@ -47,7 +47,7 @@ public class TenancyTest extends MongoMkTestBase {
 		threadExecutor = Executors.newFixedThreadPool(tenantsNumber);
 		for (int i = 1; i <= tenantsNumber; i++) {
 			tc = new TenantCreator("tenantC" + clusterNodeId + i + "id",
-					conf.getMongoPort(), 20);
+					conf.getMongoPort(), 200);
 			threadExecutor.execute(tc);
 		}
 		threadExecutor.shutdown();
