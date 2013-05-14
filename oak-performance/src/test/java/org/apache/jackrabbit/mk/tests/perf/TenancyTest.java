@@ -18,6 +18,7 @@ public class TenancyTest extends MongoMkTestBase {
 
 	@Before
 	public void before() throws UnknownHostException {
+		/*
 		Mongo mongo = new Mongo(conf.getHost(), conf.getMongoPort());
 		System.out.println(mongo.getDatabaseNames().size());
 		List<String> databases = mongo.getDatabaseNames();
@@ -31,7 +32,7 @@ public class TenancyTest extends MongoMkTestBase {
 				}
 			}
 		}
-		mongo.close();
+		mongo.close();*/
 	}
 
 	@Test
