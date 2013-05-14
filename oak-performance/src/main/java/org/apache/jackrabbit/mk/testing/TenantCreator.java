@@ -2,7 +2,6 @@ package org.apache.jackrabbit.mk.testing;
 
 import org.apache.jackrabbit.mk.api.MicroKernel;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBAddress;
 import com.mongodb.Mongo;
 
 import org.apache.jackrabbit.mongomk.MongoMK;

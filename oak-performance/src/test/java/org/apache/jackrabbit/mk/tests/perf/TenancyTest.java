@@ -11,12 +11,13 @@ import org.junit.After;
 import org.junit.Test;
 import com.mongodb.Mongo;
 
-public class TenancyTest extends MongoMkTestBase{
+public class TenancyTest extends MongoMkTestBase {
 
 	ExecutorService threadExecutor;
 
 	@Test
-	public void create10Tenants() throws InterruptedException, UnknownHostException {
+	public void create10Tenants() throws InterruptedException,
+			UnknownHostException {
 
 		TenantCreator tc;
 		int tenantsNumber = 3;
@@ -26,7 +27,8 @@ public class TenancyTest extends MongoMkTestBase{
 
 		threadExecutor = Executors.newFixedThreadPool(tenantsNumber);
 		for (int i = 1; i <= tenantsNumber; i++) {
-			tc = new TenantCreator("tenantC" + i + "id", conf.getMongoPort(), 100);
+			tc = new TenantCreator("tenantC" + clusterNodeId + i + "id",
+					conf.getMongoPort(), 100);
 			threadExecutor.execute(tc);
 		}
 		threadExecutor.shutdown();
