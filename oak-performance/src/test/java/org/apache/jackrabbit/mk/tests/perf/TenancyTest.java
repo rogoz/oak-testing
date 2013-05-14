@@ -56,20 +56,17 @@ public class TenancyTest extends MongoMkTestBase {
 
 	@After
 	public void after() throws Exception {
+		
 		Mongo mongo = new Mongo(conf.getHost(), conf.getMongoPort());
 		System.out.println("Number of databases: "
 				+ mongo.getDatabaseNames().size());
-		List<String> databases = mongo.getDatabaseNames();
-		for (String database : databases) {
-			if ((!database.equals("admin")) && (!database.equals("config"))
-					&& (!database.equals("local"))) {
-				try {
-					mongo.dropDatabase(database);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		}
-		mongo.close();
+		/*
+		 * 
+		 * List<String> databases = mongo.getDatabaseNames(); for (String
+		 * database : databases) { if ((!database.equals("admin")) &&
+		 * (!database.equals("config")) && (!database.equals("local"))) { try {
+		 * mongo.dropDatabase(database); } catch (Exception e) { // TODO: handle
+		 * exception } } } mongo.close();
+		 */
 	}
 }
