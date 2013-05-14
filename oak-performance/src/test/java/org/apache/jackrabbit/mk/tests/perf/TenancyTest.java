@@ -24,7 +24,11 @@ public class TenancyTest extends MongoMkTestBase {
 		for (String database : databases) {
 			if ((!database.equals("admin")) && (!database.equals("config"))
 					&& (!database.equals("local"))) {
-				mongo.dropDatabase(database);
+				try {
+					mongo.dropDatabase(database);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
 		mongo.close();
