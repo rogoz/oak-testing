@@ -8,12 +8,27 @@ import java.util.concurrent.TimeUnit;
 import org.apache.jackrabbit.mk.testing.MongoMkTestBase;
 import org.apache.jackrabbit.mk.testing.TenantCreator;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import com.mongodb.Mongo;
 
 public class TenancyTest extends MongoMkTestBase {
 
 	ExecutorService threadExecutor;
+
+	@Before
+	public void before() throws UnknownHostException {
+		Mongo mongo = new Mongo(conf.getHost(), conf.getMongoPort());
+		System.out.println(mongo.getDatabaseNames().size());
+		List<String> databases = mongo.getDatabaseNames();
+		for (String database : databases) {
+			if ((!database.equals("admin")) && (!database.equals("config"))
+					&& (!database.equals("local"))) {
+				mongo.dropDatabase(database);
+			}
+		}
+		mongo.close();
+	}
 
 	@Test
 	public void create10Tenants() throws InterruptedException,
@@ -28,7 +43,7 @@ public class TenancyTest extends MongoMkTestBase {
 		threadExecutor = Executors.newFixedThreadPool(tenantsNumber);
 		for (int i = 1; i <= tenantsNumber; i++) {
 			tc = new TenantCreator("tenantC" + clusterNodeId + i + "id",
-					conf.getMongoPort(), 10);
+					conf.getMongoPort(), 20);
 			threadExecutor.execute(tc);
 		}
 		threadExecutor.shutdown();
@@ -38,13 +53,19 @@ public class TenancyTest extends MongoMkTestBase {
 	@After
 	public void after() throws Exception {
 		Mongo mongo = new Mongo(conf.getHost(), conf.getMongoPort());
-		System.out.println(mongo.getDatabaseNames().size());
+		System.out.println("Number of databases: "
+				+ mongo.getDatabaseNames().size());
 		List<String> databases = mongo.getDatabaseNames();
 		for (String database : databases) {
 			if ((!database.equals("admin")) && (!database.equals("config"))
 					&& (!database.equals("local"))) {
-				mongo.dropDatabase(database);
+				try {
+					mongo.dropDatabase(database);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
+		mongo.close();
 	}
 }
