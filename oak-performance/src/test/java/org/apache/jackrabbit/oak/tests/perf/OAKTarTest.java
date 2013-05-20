@@ -1,7 +1,7 @@
 package org.apache.jackrabbit.oak.tests.perf;
 
 import java.io.File;
-import java.util.Random;
+import java.io.IOException;
 import javax.jcr.Node;
 import javax.jcr.SimpleCredentials;
 import org.apache.jackrabbit.mk.testing.OakTarTestBase;
@@ -10,25 +10,35 @@ import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStore;
 import org.apache.jackrabbit.oak.plugins.segment.SegmentStore;
 import org.apache.jackrabbit.oak.plugins.segment.file.FileStore;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.apache.commons.io.FileUtils;
 public class OAKTarTest extends OakTarTestBase {
 
 	
-
+	SegmentStore store;
+	
 	@Before
 	public void beforeTest() throws Exception {
 
+		File directory = new File("tarFile");
+		FileUtils.deleteDirectory(directory);
 		// create tarmk oak instance
-		SegmentStore store = new FileStore(new File("tarFile"));
+		store = new FileStore(directory);
 		Oak oak = new Oak(new SegmentNodeStore(store));
 		repo = new Jcr(oak).createRepository();
 		
 		adminSession = repo.login(new SimpleCredentials("admin", "admin"
 				.toCharArray()));
+		monitor.reset();
 	}
-
+	
+	@After
+	public void afterTest() throws IOException{
+		store.close();
+	}
+	
 	// 10,000 nodes ; 100 nodes/commit
 	@Test
 	public void testFlatStructure() throws Exception {
@@ -43,6 +53,8 @@ public class OAKTarTest extends OakTarTestBase {
 				monitor.stop();
 			}
 		}
+		FileUtils.writeStringToFile(new File("resultsFlat.txt"), monitor.toString());
+		
 	}
 
 	// 100,000 nodes 1,000 nodes/commit
@@ -61,6 +73,7 @@ public class OAKTarTest extends OakTarTestBase {
 				monitor.stop();
 			}
 		}
+		FileUtils.writeStringToFile(new File("resultsPyramid.txt"), monitor.toString());
 	}
 	
 	// 100,000 nodes 1,000 nodes/commit
@@ -79,5 +92,6 @@ public class OAKTarTest extends OakTarTestBase {
 				monitor.stop();
 			}
 		}
+		FileUtils.writeStringToFile(new File("resultsLargePyramid.txt"), monitor.toString());
 	}
 }
