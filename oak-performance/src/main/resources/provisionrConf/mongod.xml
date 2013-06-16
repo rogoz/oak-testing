@@ -7,12 +7,14 @@
         <package>mdadm</package>
         <package>lvm2</package>
     </packages>
+    <ports>
+        <port>27017</port>
+        <port>27018</port>
+    </ports>
     <repositories>
         <repository id="10gen">
             <entries>
-                <entry>deb
-                    http://downloads-distro.mongodb.org/repo/debian-sysvinit
-                    dist 10gen</entry>
+                <entry>deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen</entry>
             </entries>
             <key><![CDATA[-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.10 (Darwin)
@@ -49,3 +51,4 @@ L6MsuHbG2OYDZgAk8eKhvyd0y/pAhZpNuQ82MMGBmcueSA==
         </repository>
     </repositories>
 </template>
+
