@@ -7,7 +7,7 @@
 RAND=$(( $RANDOM % 100000 ))
 MONGOS_KEY=s${RAND}
 SHARDS_KEY=`xmllint --xpath 'string(/project/node[1]/attribute[@name="key"]/@value)' shards.xml`
-PROVISIONR_PATH=/home/tudor/repos/incubator-provisionr/karaf/assembly/target/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/
+PROVISIONR_PATH=/home/jslave/app/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/
 PROVISIONR_HOST=localhost 
 PROVISIONR_PORT=8181 
 MONGOS_NUMBER=$1

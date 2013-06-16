@@ -5,7 +5,7 @@
 
 PROVISIONR_HOST=localhost 
 PROVISIONR_PORT=8181 
-PROVISIONR_PATH=/home/tudor/repos/incubator-provisionr/karaf/assembly/target/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/ 
+PROVISIONR_PATH=/home/jslave/app/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/ 
 RAND=$(( $RANDOM % 100000 ))
 SHARDS_KEY=s${RAND} 
 SHARDS_NUMBER=$1
