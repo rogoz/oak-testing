@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template id="mongos" os-version="10.04 LTS">
+<template id="mongod" os-version="10.04 LTS">
     <description>Mongos template instance</description>
     <packages>
         <package>mongodb-10gen</package>
         <package>git-core</package>
-        <package>libxml2-utils</package>
+        <package>mdadm</package>
+        <package>lvm2</package>
     </packages>
-    <ports>
-        <port>27017</port>
-        <port>4502</port>
-        <port>4503</port>
-    </ports>
     <repositories>
         <repository id="10gen">
             <entries>
                 <entry>deb
                     http://downloads-distro.mongodb.org/repo/debian-sysvinit
-                    dist 10gen
-                </entry>
+                    dist 10gen</entry>
             </entries>
             <key><![CDATA[-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.10 (Darwin)
