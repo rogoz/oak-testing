@@ -8,7 +8,9 @@ PROVISIONR_PORT=8181
 PROVISIONR_PATH=/home/tudor/repos/incubator-provisionr/karaf/assembly/target/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/ 
 RAND=$(( $RANDOM % 100000 ))
 SHARDS_KEY=s${RAND} 
-${PROVISIONR_PATH}client "provisionr:create --id amazon --key ${SHARDS_KEY} --size @option.SHARDS_NUMBER@ --volume /dev/sdh1:@option.HDD_SIZE@ --volume /dev/sdh2:@option.HDD_SIZE@ --volume /dev/sdh3:@option.HDD_SIZE@ --volume /dev/sdh4:@option.HDD_SIZE@ --hardware-type m1.large --template mongod --image-id ami-4965f479 --timeout 1200" 
+SHARDS_NUMBER=@option.SHARDS_NUMBER@
+HDD_SIZE=@option.HDD_SIZE@
+${PROVISIONR_PATH}client "provisionr:create --id amazon --key ${SHARDS_KEY} --size ${SHARDS_NUMBER} --volume /dev/sdh1:${HDD_SIZE} --volume /dev/sdh2:${HDD_SIZE} --volume /dev/sdh3:${HDD_SIZE} --volume /dev/sdh4:${HDD_SIZE} --hardware-type m1.large --template mongod --image-id ami-4965f479 --timeout 1200" 
  
 # wait 5 minutes for the instances to be created 
 sleep 300 
