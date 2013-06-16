@@ -3,7 +3,7 @@
 # Configure the mongos stations 2.Enable sharding on DATABASE_NAME, and sets the sharding key for blobs and nodes collections.
  
 MONGOS_MAIN=`xmllint --xpath 'string(/project/node[1]/@hostname)' mongos.xml` 
-CURRENT_NODE=@node.hostname@ 
+CURRENT_NODE=$1
 MONGOS_PORT=27017 
 MONGOD_PORT=27017 
 DATABASE_NAME=Oak 
@@ -11,7 +11,7 @@ DATABASE_NAME=Oak
  
 TEMP=`xmllint --xpath '/project/node/@hostname' shards.xml|sed -e "s/ hostname=/ /g"| sed -e "s/\"/'/g"` 
 declare -a shards=($TEMP) 
-echo shards=${shards[@]} 
+ 
  
  
 # configure the cluster from the main platform 
