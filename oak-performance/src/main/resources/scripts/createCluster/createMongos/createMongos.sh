@@ -12,9 +12,9 @@ PROVISIONR_HOST=localhost
 PROVISIONR_PORT=8181 
 MONGOS_NUMBER=$1
 # creates new instances on amazon
-${PROVISIONR_PATH}client "provisionr:create --id amazon --key ${MONGOS_KEY} --size ${MONGOS_NUMBER} --hardware-type m1.large --template mongos --image-id ami-4965f479 --timeout 1200"
+${PROVISIONR_PATH}client "provisionr:create --id amazon --key ${MONGOS_KEY} --size ${MONGOS_NUMBER} --hardware-type m1.large --template mongos --image-id ami-4965f479 --timeout 600"
 # wait for the instances to be created
-sleep 300
+sleep 600
 
 # create mongos connection file on localhost
 rm -rf mongos.xml 
