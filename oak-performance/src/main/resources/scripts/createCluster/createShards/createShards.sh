@@ -1,4 +1,4 @@
-#!/bin/bash  
+
  
 # Create a database shard node and downloads the shards connection parameters on the local server.This script should run on the rundeck local server.
 # SHARDS_NUMBER and HDD_SIZE are defined as rundeck options.  
