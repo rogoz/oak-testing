@@ -18,10 +18,11 @@ TEMP=`xmllint --xpath '/project/node/@hostname' shards.xml|sed -e "s/ hostname=/
 declare -a shards=($TEMP) 
 echo shards=${shards[@]} 
  
-AUX= 
-for shard in "${shards[@]}" 
+AUX=
+# total=${#shards[@]}
+for (( i=0; i<=2; i++ ))
 do 
-  shard_trim=`echo $shard|tr -d ''\'''` 
+  shard_trim=`echo ${shards[$i]}|tr -d ''\'''` 
   AUX=${AUX},${shard_trim}:${CONFIG_PORT} 
 done 
 AUX=${AUX:1} 
