@@ -67,13 +67,17 @@ sudo nohup mongod >& /dev/null &
 # start config node
 sudo mkdir ~/config/
 sudo nohup mongod --configsvr --port 20001 --dbpath=config --logpath config/config.log >& /dev/null &
-
 sleep 60
+
 # Test database
-mongo --host localhost testDB --port 27017 --eval "db.createCollection(\"testCollection\", {})"
-rc=$?
-if [[ $rc != 0 ]] ; then
-    echo "Shard wasn't configured properly."
+while [[ $rc != 0 ]]
+do
+  mongo --host localhost testDB --port 27017 --eval "db.createCollection(\"testCollection\", {})"
+  rc=$?
+  if [[ $rc != 0 ]] ; then
+     echo "Shard wasn't configured properly."
+  sleep 10
+done
 fi
 
 
