@@ -10,6 +10,25 @@ MONGOD_DBPATH="dbpath=/data"
 MONGOD_SHARD="shardsvr = true"
 
 
+function retry {
+   nTrys=0
+   maxTrys=10
+   status=256
+   until [ $status == 0 ] ; do
+      $1
+      status=$?
+      nTrys=$(($nTrys + 1))
+      if [ $nTrys -gt $maxTrys ] ; then
+            echo "Number of re-trys exceeded. Exit code: $status"
+            exit $status
+      fi
+      if [ $status != 0 ] ; then
+            echo "Failed (exit code $status)... retry $nTrys"
+            sleep 10
+      fi
+   done
+}
+
 # configure RAID
 sudo mdadm --verbose --create /dev/md0 --level=10 --chunk=256 --raid-devices=4 /dev/xvdh1 /dev/xvdh2 /dev/xvdh3 /dev/xvdh4
 echo 'DEVICE /dev/xvdh1 /dev/xvdh2 /dev/xvdh3 /dev/xvdh4' | sudo tee -a /etc/mdadm.conf
@@ -69,16 +88,7 @@ sudo mkdir ~/config/
 sudo nohup mongod --configsvr --port 20001 --dbpath=config --logpath config/config.log >& /dev/null &
 sleep 60
 
-# Test database
-while [[ $rc != 0 ]]
-do
-  mongo --host localhost testDB --port 27017 --eval "db.createCollection(\"testCollection\", {})"
-  rc=$?
-  if [[ $rc != 0 ]] ; then
-     echo "Shard wasn't configured properly."
-  fi		
-  sleep 10
-done
+retry "mongo --host localhost testDB --port 27017 --eval db.createCollection(\"testCollection\", {})"
 
 
 
