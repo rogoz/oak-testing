@@ -76,9 +76,10 @@ do
   rc=$?
   if [[ $rc != 0 ]] ; then
      echo "Shard wasn't configured properly."
+  fi		
   sleep 10
 done
-fi
+
 
 
 
