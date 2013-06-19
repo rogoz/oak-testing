@@ -26,6 +26,8 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN" ]; then
 	done 
 	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "sh.enableSharding(\"$DATABASE_NAME\")" 
 	# Set sharding key for nodes and blobs 
+	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"nodes\", {})"
+	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"blobs\", {})"  
 	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.nodes\", { \"_id\": 1 }, true)" 
 	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.blobs\", { \"_id\": 1 }, true)" 
 fi
