@@ -68,5 +68,14 @@ sudo nohup mongod >& /dev/null &
 sudo mkdir ~/config/
 sudo nohup mongod --configsvr --port 20001 --dbpath=config --logpath config/config.log >& /dev/null &
 
+sleep 5
+# Test database
+mongo --host localhost testDB --port 27017 --eval "db.createCollection(\"testCollection\", {})"
+rc=$?
+if [[ $rc != 0 ]] ; then
+    echo "Shard @node.hostname@ wasn't configured properly."
+fi
+
+
 
 
