@@ -3,10 +3,11 @@
     <description>Mongos template instance</description>
     <packages>
         <package>mongodb-10gen</package>
-        <package>git-core</package>
         <package>libxml2-utils</package>
+        <package>git-core</package>
     </packages>
     <ports>
+        <port>27017</port>
         <port>28017</port>
         <port>30000</port>
     </ports>
@@ -50,4 +51,3 @@ L6MsuHbG2OYDZgAk8eKhvyd0y/pAhZpNuQ82MMGBmcueSA==
         </repository>
     </repositories>
 </template>
-

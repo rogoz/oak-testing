@@ -6,8 +6,8 @@ import javax.jcr.Node;
 import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.mk.testing.OakMongoTestBase;
-import org.apache.jackrabbit.mongomk.MongoMK;
-import org.apache.jackrabbit.mongomk.util.MongoConnection;
+import org.apache.jackrabbit.oak.plugins.mongomk.MongoMK;
+import org.apache.jackrabbit.oak.plugins.mongomk.util.MongoConnection;
 import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.junit.Before;
 import org.junit.Test;

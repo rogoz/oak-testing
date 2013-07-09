@@ -4,13 +4,13 @@ import java.util.Random;
 import javax.jcr.Node;
 import javax.jcr.SimpleCredentials;
 import org.apache.jackrabbit.mk.testing.OakMongoTestBase;
-import org.apache.jackrabbit.mongomk.MongoMK;
+import org.apache.jackrabbit.oak.plugins.mongomk.MongoMK;
 import org.apache.jackrabbit.oak.Oak;
 import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStore;
 import org.apache.jackrabbit.oak.plugins.segment.SegmentStore;
 import org.apache.jackrabbit.oak.plugins.segment.mongo.MongoStore;
-import org.apache.jackrabbit.mongomk.util.MongoConnection;
+import org.apache.jackrabbit.oak.plugins.mongomk.util.MongoConnection;
 import org.junit.Before;
 import org.junit.Test;
 

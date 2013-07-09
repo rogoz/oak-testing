@@ -2,8 +2,8 @@ package org.apache.jackrabbit.mk.tests.perf;
 
 import java.util.Random;
 import org.apache.jackrabbit.mk.testing.MongoMkTestBase;
-import org.apache.jackrabbit.mongomk.util.MongoConnection;
-import org.apache.jackrabbit.mongomk.MongoMK;
+import org.apache.jackrabbit.oak.plugins.mongomk.MongoMK;
+import org.apache.jackrabbit.oak.plugins.mongomk.util.MongoConnection;
 import org.junit.Before;
 import org.junit.Test;
 

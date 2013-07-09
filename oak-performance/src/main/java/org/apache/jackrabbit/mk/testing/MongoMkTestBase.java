@@ -4,7 +4,7 @@ import java.util.Properties;
 import org.apache.jackrabbit.mk.api.MicroKernel;
 import org.apache.jackrabbit.mk.results.DBWriter;
 import org.apache.jackrabbit.mk.util.Configuration;
-import org.apache.jackrabbit.mongomk.util.MongoConnection;
+import org.apache.jackrabbit.oak.plugins.mongomk.util.MongoConnection;
 import org.junit.Before;
 
 import com.jamonapi.Monitor;

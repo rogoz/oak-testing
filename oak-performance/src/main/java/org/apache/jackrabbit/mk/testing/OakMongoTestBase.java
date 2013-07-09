@@ -4,7 +4,7 @@ import java.util.Properties;
 import javax.jcr.Repository;
 import javax.jcr.Session;
 import org.apache.jackrabbit.mk.results.DBWriter;
-import org.apache.jackrabbit.mongomk.util.MongoConnection;
+import org.apache.jackrabbit.oak.plugins.mongomk.util.MongoConnection;
 import org.junit.Before;
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;

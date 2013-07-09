@@ -4,8 +4,8 @@ import org.apache.jackrabbit.mk.api.MicroKernel;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 
-import org.apache.jackrabbit.mongomk.MongoMK;
-import org.apache.jackrabbit.mongomk.util.MongoConnection;
+import org.apache.jackrabbit.oak.plugins.mongomk.MongoMK;
+import org.apache.jackrabbit.oak.plugins.mongomk.util.MongoConnection;
 
 public class TenantCreator implements Runnable {
 
