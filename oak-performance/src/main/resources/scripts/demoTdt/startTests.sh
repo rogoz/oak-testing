@@ -20,7 +20,8 @@ CLUSTER_NODE_ID=${CURRENT_NODE:0:15}
 PROCESS_TIMEOUT=30
 
 # Download the tests
-echo Clone test repository  
+echo Clone test repository 
+rm -rf oak-testing/ 
 git clone https://github.com/rogoz/oak-testing.git
 
 # number of mongos  
