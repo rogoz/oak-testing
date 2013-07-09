@@ -25,9 +25,9 @@ git clone https://github.com/rogoz/oak-testing.git
 
 # number of mongos  
 TEMP=`xmllint --xpath '/project/node/@hostname' mongos.xml|sed -e "s/ hostname=/ /g"| sed -e "s/\"/'/g"` 
-declare -a mongos=($TEMP) 
-echo mongos=${mongos[@]} 
-MONGOS_NUMBER=${#mongos[@]} 
+declare -a mongos=($TEMP)
+echo mongos=${mongos[@]}
+MONGOS_NUMBER=${#mongos[@]}
 echo MONGOS_NUMBER=$MONGOS_NUMBER
 
    
