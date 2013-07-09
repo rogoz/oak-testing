@@ -15,6 +15,7 @@ function retry {
    maxTrys=10
    status=256
    until [ $status == 0 ] ; do
+      echo Running command $1
       $1
       status=$?
       nTrys=$(($nTrys + 1))
@@ -89,7 +90,6 @@ sudo nohup mongod --configsvr --port 20001 --dbpath=config --logpath config/conf
 sleep 60
 
 TEST_COMMAND='mongo --eval "printjson(db.serverStatus())"'
-echo ${TEST_COMMAND}
 retry "${TEST_COMMAND}"
 
 
