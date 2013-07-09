@@ -88,9 +88,9 @@ sudo mkdir ~/config/
 sudo nohup mongod --configsvr --port 20001 --dbpath=config --logpath config/config.log >& /dev/null &
 sleep 60
 
-TEST_COMMAND='mongo --host localhost testDB --port 27017 --eval "db.createCollection("testCollection", {})"'
+TEST_COMMAND='mongo --eval "printjson(db.serverStatus())"'
 echo ${TEST_COMMAND}
-retry ${TEST_COMMAND}
+retry "${TEST_COMMAND}"
 
 
 
