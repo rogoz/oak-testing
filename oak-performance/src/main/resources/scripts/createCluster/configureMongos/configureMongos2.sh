@@ -12,7 +12,28 @@ DATABASE_NAME=Oak
 TEMP=`xmllint --xpath '/project/node/@hostname' shards.xml|sed -e "s/ hostname=/ /g"| sed -e "s/\"/'/g"` 
 declare -a shards=($TEMP) 
  
- 
+function retry {
+   nTrys=0
+   maxTrys=10
+   status=256
+   until [ $status == 0 ] ; do
+      echo Running command $1
+      $1
+      status=$?
+      nTrys=$(($nTrys + 1))
+      if [ $nTrys -gt $maxTrys ] ; then
+            echo "Number of re-trys exceeded. Exit code: $status"
+            exit $status
+      fi
+      if [ $status != 0 ] ; then
+            echo "Failed (exit code $status)... retry $nTrys"
+            sleep 10
+      fi
+   done
+}
+
+TEST_COMMAND='mongo --eval "printjson(db.serverStatus())"'
+retry "${TEST_COMMAND}" 
  
 # configure the cluster from the main platform 
 if [ "$CURRENT_NODE" == "$MONGOS_MAIN" ]; then 
@@ -21,13 +42,18 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN" ]; then
 	do 
 	  shard_trim=`echo $shard|tr -d ''\'''` 
 	  echo "Link shard:sh.addShard(\"${shard_trim}:${MONGOD_PORT}\")" 
-	  mongo --host $MONGOS_MAIN admin --port $MONGOS_PORT --eval "sh.addShard(\"${shard_trim}:${MONGOD_PORT}\")" 
+	  mongo --host localhost admin --port $MONGOS_PORT --eval "sh.addShard(\"${shard_trim}:${MONGOD_PORT}\")" 
 	  sleep 2 
 	done 
-	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "sh.enableSharding(\"$DATABASE_NAME\")" 
+
 	# Set sharding key for nodes and blobs 
-	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"nodes\", {})"
-	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"blobs\", {})"  
-	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.nodes\", { \"_id\": 1 }, true)" 
-	mongo --host $MONGOS_MAIN $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.blobs\", { \"_id\": 1 }, true)" 
+	mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"nodes\", { size: 209715200 })"
+	mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"blobs\", { size: 20971520 })"
+	mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"syncOAK\", { size: 20971520 })"
+        mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "db.createCollection(\"results\", { size: 20971520 })"
+        sleep 5
+        echo "Enable sharding"
+        mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "sh.enableSharding(\"$DATABASE_NAME\")"  
+	mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.nodes\", { \"_id\": 1 }, true)" 
+	mongo --host localhost $DATABASE_NAME --port $MONGOS_PORT --eval "sh.shardCollection(\"$DATABASE_NAME.blobs\", { \"_id\": 1 }, true)" 
 fi
