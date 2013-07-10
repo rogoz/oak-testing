@@ -39,7 +39,7 @@ public class OAKTest extends OakMongoTestBase {
 					1024 * 1024 * 200);
 			Oak oak = new Oak(new SegmentNodeStore(store));
 			repo = new Jcr(oak).createRepository();
-			nodesNumber = 3000;
+			nodesNumber = 10000;
 		}
 		adminSession = repo.login(new SimpleCredentials("admin", "admin"
 				.toCharArray()));
