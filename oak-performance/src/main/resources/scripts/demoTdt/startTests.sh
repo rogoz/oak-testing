@@ -51,7 +51,7 @@ if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then
 else   
       # wait for the repository to be initialized from the main mongos platform   
       sleep 60
-      nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dorg.slf4j.simpleLogger.logFile=Oakmk.log -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dtest=$TEST_NAME -Dmongos.number=$MONGOS_NUMBER -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=mongomk &
+      nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dorg.slf4j.simpleLogger.logFile=Oakmk.log -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dtest=$TEST_NAME -Dmongos.number=$MONGOS_NUMBER -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=segmentmk &
     PID=`echo $!`  
     echo Starting the tests on process=$PID  
     for (( ; ; ))  
