@@ -39,7 +39,7 @@ public class OAKTest extends OakMongoTestBase {
 					1024 * 1024 * 200);
 			Oak oak = new Oak(new SegmentNodeStore(store));
 			repo = new Jcr(oak).createRepository();
-			nodesNumber = 10000;
+			nodesNumber = 1000;
 		}
 		adminSession = repo.login(new SimpleCredentials("admin", "admin"
 				.toCharArray()));
@@ -50,7 +50,7 @@ public class OAKTest extends OakMongoTestBase {
 	@Test
 	public void testFlatStructure() throws Exception {
 
-		int nodesPerSave = 100;
+		int nodesPerSave = 10;
 		int count = 0;
 		Node root = adminSession.getRootNode();
 		dbWriter.initialCommit("syncOAK");
