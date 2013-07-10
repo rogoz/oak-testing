@@ -30,13 +30,17 @@ echo "***** Step 4: Configure mongos platforms. *****"
 run -i 6 --follow
 echo "***** Step 4: Completed. *****"
 
-#Start test
-echo "***** Step 5: Start tests. *****"
-run -i 9 --follow -- -TEST_NAME ${TEST_NAME}
+#Install Oak
+echo "***** Step 5: Install Oak platforms. *****"
+run -i 8 --follow
 echo "***** Step 5: Completed. *****"
 
+#Start test
+echo "***** Step 6: Start tests. *****"
+run -i 9 --follow -- -TEST_NAME ${TEST_NAME}
+echo "***** Step 6: Completed. *****"
 
 #Collect results
-echo "***** Step 6: Collect results. *****"
+echo "***** Step 7: Collect results. *****"
 run -i 10 --follow
-echo "***** Step 6: Completed. *****"
+echo "***** Step 7: Completed. *****"
