@@ -35,7 +35,7 @@ echo MONGOS_NUMBER=$MONGOS_NUMBER
 if [ "$CURRENT_NODE" == "$MONGOS_MAIN_PLATFORM" ]; then     
      
     # start the test on the main mongos platform (workaround for the concurrent oak repositories init)   
-    nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dorg.slf4j.simpleLogger.logFile=Oakmk.log -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dtest=$TEST_NAME -Dmongos.number=$MONGOS_NUMBER -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=mongomk &
+    nohup mvn -f /home/$USER/oak-testing/oak-performance/pom.xml clean test -Dorg.slf4j.simpleLogger.logFile=Oakmk.log -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dtest=$TEST_NAME -Dmongos.number=$MONGOS_NUMBER -Dcluster.node=$CLUSTER_NODE_ID -Doak.type=segmentmk &
     PID=`echo $!`  
     echo Starting the tests on process=$PID  
     for (( ; ; ))  
