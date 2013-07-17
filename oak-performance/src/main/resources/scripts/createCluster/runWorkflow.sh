@@ -2,8 +2,6 @@
 
 RUNDECK_HOME=/home/tudor/Tools/rundeck/
 PATH=${PATH}:${RUNDECK_HOME}tools/bin
-SHARDS_NUMBER=3
-MONGOS_NUMBER=3
 HDD_SIZE=25
 PROVISIONR_PATH=/home/tudor/repos/incubator-provisionr/karaf/assembly/target/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/
 TEST_NAME="OAKTest#testFlatStructure"
