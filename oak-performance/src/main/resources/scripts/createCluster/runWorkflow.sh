@@ -4,7 +4,7 @@ RUNDECK_HOME=/home/tudor/Tools/rundeck/
 PATH=${PATH}:${RUNDECK_HOME}tools/bin
 HDD_SIZE=25
 PROVISIONR_PATH=/home/tudor/repos/incubator-provisionr/karaf/assembly/target/org.apache.provisionr-0.4.0-incubating-SNAPSHOT/bin/
-TEST_NAME="OAKTest#testFlatStructure"
+
 
 # Create shards
 echo "***** Step 1: Creating cluster's shards. *****"
@@ -13,7 +13,6 @@ run -i 7 --follow -- -SHARDS_NUMBER ${SHARDS_NUMBER} -HDD_SIZE ${HDD_SIZE} -PROV
 echo "***** Step 1: Completed. *****"
 
 # Configure shards
-
 echo "***** Step 2: Configure cluster's shards. *****"
 run -i 1 --follow
 echo "***** Step 2: Completed. *****"
@@ -28,17 +27,3 @@ echo "***** Step 4: Configure mongos platforms. *****"
 run -i 6 --follow
 echo "***** Step 4: Completed. *****"
 
-#Install Oak
-echo "***** Step 5: Install Oak platforms. *****"
-run -i 8 --follow
-echo "***** Step 5: Completed. *****"
-
-#Start test
-echo "***** Step 6: Start tests. *****"
-run -i 9 --follow -- -TEST_NAME ${TEST_NAME}
-echo "***** Step 6: Completed. *****"
-
-#Collect results
-echo "***** Step 7: Collect results. *****"
-run -i 10 --follow
-echo "***** Step 7: Completed. *****"
