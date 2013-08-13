@@ -20,7 +20,7 @@ declare -a mongos=($TEMP)
 for mongosInstance in "${mongos[@]}" 
 do
   mongosInstance_trim=`echo ${mongosInstance}|tr -d ''\'''` 
-  scp ${USER}@${mongosInstance_trim}:home/${USER}/oak-testing/oak-performance/target/mk.log ${OUTPUT_DIR}/${mongosInstance_trim}${RESULT_HTML}
+  scp ${USER}@${mongosInstance_trim}:/home/${USER}/oak-testing/oak-performance/target/mk.log ${OUTPUT_DIR}/${mongosInstance_trim}${RESULT_HTML}
   sleep 2 
 done 
 
