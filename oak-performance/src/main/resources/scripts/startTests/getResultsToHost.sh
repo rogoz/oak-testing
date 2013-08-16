@@ -3,6 +3,7 @@
 RESULT_HTML=results.html
 SUMMARY=resultsStats.json
 DBSUMMARY=resultsDBStats.json
+MK_LOG=.mk.log
 MONGOS_MAIN_PLATFORM=`xmllint --xpath 'string(/project/node[1]/@hostname)' mongos.xml`
 OUTPUT_DIR=$1
 
@@ -20,7 +21,7 @@ declare -a mongos=($TEMP)
 for mongosInstance in "${mongos[@]}" 
 do
   mongosInstance_trim=`echo ${mongosInstance}|tr -d ''\'''` 
-  scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${mongosInstance_trim}:/home/${USER}/oak-testing/oak-performance/target/mk.log ${OUTPUT_DIR}/${mongosInstance_trim}${RESULT_HTML}
+  scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${mongosInstance_trim}:/home/${USER}/oak-testing/oak-performance/target/mk.log ${OUTPUT_DIR}/${mongosInstance_trim}${MK_LOG}
   sleep 2 
 done 
 
