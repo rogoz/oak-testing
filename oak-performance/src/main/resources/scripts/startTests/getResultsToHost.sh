@@ -9,9 +9,9 @@ OUTPUT_DIR=$1
 # get results
 
 mkdir -p $OUTPUT_DIR
-scp ${USER}@${MONGOS_MAIN_PLATFORM}:/home/${USER}/${RESULT_HTML} ${OUTPUT_DIR}/${RESULT_HTML}
-scp ${USER}@${MONGOS_MAIN_PLATFORM}:/home/${USER}/${DBSUMMARY} ${OUTPUT_DIR}/${DBSUMMARY}
-scp ${USER}@${MONGOS_MAIN_PLATFORM}:/home/${USER}/${SUMMARY} ${OUTPUT_DIR}/${SUMMARY}
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${MONGOS_MAIN_PLATFORM}:/home/${USER}/${RESULT_HTML} ${OUTPUT_DIR}/${RESULT_HTML}
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${MONGOS_MAIN_PLATFORM}:/home/${USER}/${DBSUMMARY} ${OUTPUT_DIR}/${DBSUMMARY}
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${USER}@${MONGOS_MAIN_PLATFORM}:/home/${USER}/${SUMMARY} ${OUTPUT_DIR}/${SUMMARY}
 
 # get test logs
 TEMP=`xmllint --xpath '/project/node/@hostname' mongos.xml|sed -e "s/ hostname=/ /g"| sed -e "s/\"/'/g"`
