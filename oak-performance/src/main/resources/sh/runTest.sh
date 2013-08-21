@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-RUNDECK_HOME=/home/tudor/mDeploy/rundeck/
+RUNDECK_HOME=$1
 PATH=${PATH}:${RUNDECK_HOME}tools/bin
 
 
@@ -9,10 +9,11 @@ PATH=${PATH}:${RUNDECK_HOME}tools/bin
 TEST_NAME=
 OAK_TYPE=
 
-while getopts t:m:o: option
+while getopts p:t:m:o: option
 do
         case "${option}"
         in
+		p) RUNDECK_HOME=${OPTARG};;
                 t) TEST_NAME=${OPTARG};;
 		m) OAK_TYPE=${OPTARG};;
                 o) OUTPUT_DIR=${OPTARG};;
